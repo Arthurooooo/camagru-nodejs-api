@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "name":"argonthi",
+        "email": "argonthi@student.42.fr",
+        "city": "Paris"
+    },
+    {
+        "id": 2,
+        "name":"Joanne",
+        "email": "joanne.benhaiem@gmail.com",
+        "city": "Paris"
+    }
+]
