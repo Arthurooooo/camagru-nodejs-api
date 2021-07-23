@@ -2,14 +2,14 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-//const bodyParser = require("body-parser");
 const port = 3080;
 const users = require('./users.json');
+const dbConfig = require("./config/db.config");
+
 
 
 var arthur = {
-  name: "arthur",
-  city: "Paris",
+  username: "arthur",
   UserID: "1",
   email: "argonthi@student.42.fr"
 }
@@ -22,22 +22,16 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../my-app/build')));
-app.use(express.static('/assets/'));
+app.use(express.static('assets'));
 app.use(express.json())
+
+const db = require("./modeles");
+const Role = db.role;
+
+
 
 require("./routes/routes.js")(app);
 
-app.get('/', (req,res) => {
-  console.log(req.body)
-  res.sendFile(path.join(__dirname, './assets/index.html'));
-});
-
-
-app.get('/assets/photo1.jpg', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  console.log('api/users called!')
-  res.sendFile(path.join(__dirname,'./assets/photo1.jpg'));
-});
 
 // app.get('/api/users/:id', (req,res) => {
 //   const id = parseInt(req.params.id)
@@ -53,10 +47,9 @@ app.get('/assets/photo1.jpg', (req, res) => {
 app.put('/api/users/:id', (req,res) => {
   const id = parseInt(req.params.id)
   let user = users.find(user => user.id === id)
-  user.name =req.body.name,
-  user.city =req.body.city,
-  user.id =req.body.id,
-  user.email =req.body.email
+  user.username =req.body.username,
+  user.email =req.body.email,
+  user.password =req.body.password,
   res.status(200).json(user)
 })
 

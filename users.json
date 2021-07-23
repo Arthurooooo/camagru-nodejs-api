@@ -1,14 +1,14 @@
 [
     {
         "id": 1,
-        "name":"argonthi",
+        "username":"argonthi",
         "email": "argonthi@student.42.fr",
-        "city": "Paris"
+        "password":"test"
     },
     {
         "id": 2,
-        "name":"Joanne",
+        "username":"Joanne",
         "email": "joanne.benhaiem@gmail.com",
-        "city": "Paris"
+        "password":"test"
     }
 ]
