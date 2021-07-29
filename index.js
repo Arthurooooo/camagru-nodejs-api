@@ -1,21 +1,17 @@
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const app = express();
 const port = 3080;
 const users = require('./users.json');
 const dbConfig = require("./config/db.config");
-
-
-
-var arthur = {
-  username: "arthur",
-  UserID: "1",
-  email: "argonthi@student.42.fr"
-}
+const fileUpload = require('express-fileupload');
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:8081",
+  credentials: true
+
 };
 
 app.use(cors(corsOptions));
@@ -28,7 +24,9 @@ app.use(express.json())
 const db = require("./modeles");
 const Role = db.role;
 
-
+app.use(fileUpload({
+  createParentPath: true
+}));
 
 require("./routes/routes.js")(app);
 

@@ -1,8 +1,16 @@
 module.exports = (app) => {
-    const userController = require("../controllers/userController.js");
+
+const fs = require('fs');
+const path = require('path');
+var Post = require("../modeles/post.model.js");
+const multer = require('../middlewares/multer-config');
+
+
+
+    const userController = require("../controllers/user.controller.js");
     const verifySignUp = require("../middlewares/verifySignUp.js");
     const authcontroller = require("../controllers/auth.controller.js");
-
+    const postController = require("../controllers/post.controller.js");
 
     app.get("/", userController.GetHome);
     app.get("/api/users", userController.GetAllUsers);
@@ -25,6 +33,19 @@ module.exports = (app) => {
       );
     
       app.post("/api/signin", authcontroller.signin);
+
+      app.get('/api/get-image', (req, res) => {
+        //console.log('test')
+        postController.GetPost(req, res)
+      })
+
+      app.post('/api/upload-image', (req, res) => {
+      //postController.imgToFile(req, res)
+      //multer(req, res);
+      postController.SavePost(req, res);
+      }
+      )
+
     //   app.get('/assets/photo1.jpg', (req, res) => {
     //     res.setHeader('Access-Control-Allow-Origin', '*');
     //     console.log('api/users called!')
