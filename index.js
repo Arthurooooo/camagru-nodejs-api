@@ -15,8 +15,8 @@ var corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.static(path.join(__dirname, '../my-app/build')));
 app.use(express.static('assets'));
 app.use(express.json())
@@ -29,18 +29,6 @@ app.use(fileUpload({
 }));
 
 require("./routes/routes.js")(app);
-
-
-// app.get('/api/users/:id', (req,res) => {
-//   const id = parseInt(req.params.id)
-//   const user = users.find(user => user.id === id)
-//   res.status(200).json(user)
-// })
-
-// app.post('/api/users', (req,res) => {
-//   users.push(req.body)
-//   res.status(200).json(users)
-// })
 
 app.put('/api/users/:id', (req,res) => {
   const id = parseInt(req.params.id)

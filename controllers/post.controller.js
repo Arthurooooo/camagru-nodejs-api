@@ -8,12 +8,13 @@ const   imgToFile = (req, res) => {
 
 }
 
-const GetPost = (req, res) => {
+const GetUserLastPosts = (req, res) => {
     console.log('api/post called!')
-    Post.find({ author: 'jojo'}, (err, items) => {
+    console.log(req.query.author)
+    Post.find({ author : req.query.author }, (err, items) => {
         if (err) {
             console.log(err);
-            res.status(500).send('An error occurred', err);
+            res.status(500).send(err);
         }
         else {
             //console.log(items[0]);
@@ -32,21 +33,41 @@ const GetPost = (req, res) => {
 }
 
 const SavePost = (req, res) => {
-    // console.log(req.body)
-    postData = req.body.postData
-    //console.log(req.body.postData.author)
+    var postData = req.body
     var post = new Post({
-        date: Date.now(),
         author: postData.author,
+        date:   postData.date,
+        text:   postData.text,
+        isPublic: postData.isPublic,
         img:    postData.img
     });
-    post.save().then(result => {
-        res.status(201).json({
-            message: "User registered successfully!",
+    console.log("here")
+    post.save()
+    .then(result => {
+        res.status(201)
+        .json({
+            message: "Post saved successfully!",
         })
+        res.send()
     })
 }
 
+const DeletePost = (req, res) => {
+
+    Post.findOneAndDelete({ _id : req.body.params.postID }, (err, items) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send(err);
+        }
+        else {
+            console.log('post removed')
+            console.log(req.body.params.postID)
+            res.send()
+        }
+    })
+
+}
+
 module.exports = {
-    GetPost, SavePost, imgToFile
+    GetUserLastPosts, SavePost, DeletePost
 };

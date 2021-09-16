@@ -14,28 +14,12 @@ const GetAllUsers = (req, res) => {
 const GetUserByID = (req, res) => {
         console.log('api/users called!')
         User.find({ UserID: req.UserID }, (err, docs) => {
-                console.log(docs)
+                //console.log(docs)
                 if (!err) res.send(docs);
                 else console.log("error User not found");
         })
 }
-const postUser = (req, res) => {
-         console.log(req.body);
-         const newuser = new User({
-                username: req.body.username,
-                email: req.body.email,
-                password: req.body.password
-        })
-        newuser.save((err, user) => {
-                if (err){
-                        res.status(409).send('User exists already');
-                        console.log(newuser.username + " error, not saved to user collection.");
-                        return;
-                }
-                console.log(newuser.username + " saved to user collection.");
-        });
-        //res.send(req.body);
-}
+
 // const GetUserId = (req, res) => {
 //         const id = parseInt(req.params.id)
 //         res.send(id)
@@ -51,6 +35,5 @@ const postUser = (req, res) => {
 module.exports = {
         GetHome,
         GetUserByID,
-        GetAllUsers,
-        postUser
+        GetAllUsers
 };
