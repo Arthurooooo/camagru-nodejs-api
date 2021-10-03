@@ -55,7 +55,14 @@ const User = db.user;
       console.log('Uploading image')
       //console.log(req.body)
       postController.SavePost(req, res);
-      }
-      )
+      })
+
+      app.post('/api/passwordreset', (req, res) => {
+        userController.PasswordReset(req, res)
+      })
+
+      app.post('/api/newpassword', (req, res) => {
+        userController.NewPassword(req, res)
+      })
 
 }

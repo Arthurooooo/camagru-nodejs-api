@@ -16,7 +16,6 @@ var smtpTransport = nodemailer.createTransport({
     });
 
 exports.signup = (req, res) => {
-  console.log('we here bitch')
   console.log(req.body)
   const user = new User({
     username: req.body.username,
@@ -38,7 +37,7 @@ exports.signup = (req, res) => {
             return;
           }
 
-          link=req.get('origin')+"/verify?id="+user.activationCode;
+          link =req.get('origin')+"/verify?id="+user.activationCode;
           var mailOptions={
               to : req.body.email,
               subject : "Please confirm your Email account",
